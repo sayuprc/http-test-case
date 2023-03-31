@@ -6,8 +6,8 @@ A library for HTTP testing.
 
 |name|version|
 |---|---|
-|PHP|~8.0|
-|PHPUnit|^9.6|
+|PHP|^8.1|
+|PHPUnit|^10.0|
 
 ## Installation
 

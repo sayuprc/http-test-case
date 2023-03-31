@@ -46,15 +46,13 @@ abstract class HttpTestCase extends TestCase
     private ?ResponseInterface $latestResponse = null;
 
     /**
-     * @param string|null $name
-     * @param array       $data
-     * @param int|string  $dataName
+     * @param non-empty-string $name
      *
      * @return void
      */
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    public function __construct(string $name)
     {
-        parent::__construct($name, $data, $dataName);
+        parent::__construct($name);
 
         $this->httpClient = $this->getClient();
 
