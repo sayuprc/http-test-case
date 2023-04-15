@@ -39,6 +39,20 @@ class TestResponse
     }
 
     /**
+     * Assertion of not same status code
+     *
+     * @param int $expected
+     *
+     * @return static
+     */
+    public function assertNotStatusCode(int $expected): static
+    {
+        Assert::assertNotSame($expected, $this->response->getStatusCode());
+
+        return $this;
+    }
+
+    /**
      * Assertion of contents of the specific response header
      *
      * @param string   $name
@@ -49,6 +63,21 @@ class TestResponse
     public function assertHeader(string $name, array $expected): static
     {
         Assert::assertSame($expected, $this->getHeader($name));
+
+        return $this;
+    }
+
+    /**
+     * Assertion of not same contents of the specific response header
+     *
+     * @param string   $name
+     * @param string[] $expected
+     *
+     * @return static
+     */
+    public function assertNotHeader(string $name, array $expected): static
+    {
+        Assert::assertNotSame($expected, $this->getHeader($name));
 
         return $this;
     }
@@ -69,6 +98,21 @@ class TestResponse
     }
 
     /**
+     * Assertion of not same contents of the comma-separated string of the values for a single header
+     *
+     * @param string $name
+     * @param string $expected
+     *
+     * @return static
+     */
+    public function assertNotHeaderLine(string $name, string $expected): static
+    {
+        Assert::assertNotSame($expected, $this->getHeaderLine($name));
+
+        return $this;
+    }
+
+    /**
      * Assertion of contents of the location
      *
      * @param string $expected
@@ -78,6 +122,20 @@ class TestResponse
     public function assertLocation(string $expected): static
     {
         Assert::assertSame($expected, $this->getHeaderLine('Location'));
+
+        return $this;
+    }
+
+    /**
+     * Assertion of not same contents of the location
+     *
+     * @param string $expected
+     *
+     * @return static
+     */
+    public function assertNotLocation(string $expected): static
+    {
+        Assert::assertNotSame($expected, $this->getHeaderLine('Location'));
 
         return $this;
     }
@@ -97,6 +155,20 @@ class TestResponse
     }
 
     /**
+     * Assertion of not same contents of the content type
+     *
+     * @param string $expected
+     *
+     * @return static
+     */
+    public function assertNotContentType(string $expected): static
+    {
+        Assert::assertNotSame($expected, $this->getHeaderLine('Content-Type'));
+
+        return $this;
+    }
+
+    /**
      * Assertion of contents of the response body
      *
      * @param string $expected
@@ -106,6 +178,20 @@ class TestResponse
     public function assertBody(string $expected): static
     {
         Assert::assertSame($expected, $this->getBody());
+
+        return $this;
+    }
+
+    /**
+     * Assertion of not same contents of the response body
+     *
+     * @param string $expected
+     *
+     * @return static
+     */
+    public function assertNotBody(string $expected): static
+    {
+        Assert::assertNotSame($expected, $this->getBody());
 
         return $this;
     }
@@ -125,6 +211,20 @@ class TestResponse
     }
 
     /**
+     * Assertion of body not contains a needle
+     *
+     * @param string $needle
+     *
+     * @return static
+     */
+    public function assertNotBodyContains(string $needle): static
+    {
+        Assert::assertStringNotContainsString($needle, $this->getBody());
+
+        return $this;
+    }
+
+    /**
      * Assertion of json string
      *
      * @param string|array $expected
@@ -138,6 +238,24 @@ class TestResponse
         }
 
         Assert::assertSame($expected, json_decode($this->getBody(), true));
+
+        return $this;
+    }
+
+    /**
+     * Assertion of not same json string
+     *
+     * @param string|array $expected
+     *
+     * @return static
+     */
+    public function assertNotJson(string|array $expected): static
+    {
+        if (is_string($expected)) {
+            $expected = json_decode($expected, true);
+        }
+
+        Assert::assertNotSame($expected, json_decode($this->getBody(), true));
 
         return $this;
     }
@@ -168,6 +286,37 @@ class TestResponse
             }
 
             Assert::assertSame($expected, $actual);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Assertion of not same contents of a json string
+     *
+     * @param string $key
+     * @param mixed  $expected
+     *
+     * @return static
+     */
+    public function assertNotJsonKey(string $key, mixed $expected): static
+    {
+        $jsonArray = json_decode($this->getBody(), true);
+
+        if (! $jsonArray) {
+            Assert::fail('Failed to parse json string');
+        } else {
+            $keys = explode('.', $key);
+
+            $actual = $jsonArray[$keys[0]];
+
+            unset($keys[0]);
+
+            foreach ($keys as $key) {
+                $actual = $actual[$key];
+            }
+
+            Assert::assertNotSame($expected, $actual);
         }
 
         return $this;

@@ -216,7 +216,7 @@ abstract class HttpTestCase extends TestCase
 
         foreach ($data as $item) {
             if (! isset($item['name']) || ! isset($item['contents'])) {
-                throw new InvalidArgumentException("'name' or 'contents' is required.");
+                throw new InvalidArgumentException("'name' and 'contents' are required.");
             }
 
             fwrite(

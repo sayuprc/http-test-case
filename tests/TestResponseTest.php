@@ -37,16 +37,24 @@ class TestResponseTest extends TestCase
 
         $response
             ->assertStatusCode(200)
+            ->assertNotStatusCode(404)
             ->assertHeader('host', ['test'])
+            ->assertNotHeader('host', ['hoge'])
             ->assertHeaderLine('line', 'a, b, c, d')
+            ->assertNotHeaderLine('line', 'value')
             ->assertLocation('https://example.com')
+            ->assertNotLocation('https://localhost')
             ->assertContentType('application/json')
+            ->assertNotContentType('text/plain')
             ->assertBody('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}}')
-            ->assertBodyContains('{"name"')
+            ->assertNotBody('body')
+            ->assertBodyContains('day')
+            ->assertNotBodyContains('not body')
             ->assertJson('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}}')
             ->assertJson(['name' => 'hoge', 'birthday' => ['year' => 2023, 'month' => 3, 'day' => 30]])
+            ->assertNotJson(['name' => 'hoge', 'birthday' => ['year' => 2023]])
             ->assertJsonKey('birthday.year', 2023)
             ->assertJsonKey('birthday', ['year' => 2023, 'month' => 3, 'day' => 30])
-            ->assertBodyContains('day');
+            ->assertNotJsonKey('birthday', ['month' => 3, 'day' => 30]);
     }
 }
