@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sayuprc\HttpTestCase\Tests;
+namespace HttpTestCase\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
@@ -10,7 +10,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
-use Sayuprc\HttpTestCase\HttpTestCase;
+use HttpTestCase\HttpTestCase;
 
 class HttpTestCaseTest extends HttpTestCase
 {

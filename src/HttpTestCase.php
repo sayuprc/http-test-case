@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sayuprc\HttpTestCase;
+namespace HttpTestCase;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

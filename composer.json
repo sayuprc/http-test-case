@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sayuprc\\HttpTestCase\\": "src/"
+            "HttpTestCase\\": "src/"
         }
     },
     "authors": [
