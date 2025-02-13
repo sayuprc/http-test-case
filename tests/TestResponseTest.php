@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sayuprc\HttpTestCase\Tests;
+namespace HttpTestCase\Tests;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Sayuprc\HttpTestCase\TestResponse;
+use HttpTestCase\TestResponse;
 
 class TestResponseTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sayuprc\HttpTestCase;
+namespace HttpTestCase;
 
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;
