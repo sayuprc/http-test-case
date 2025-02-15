@@ -8,8 +8,8 @@ A library for HTTP testing.
 
 |name|version|
 |---|---|
-|PHP|^8.1|
-|PHPUnit|^10.0|
+|PHP|^8.2|
+|PHPUnit|^11.0|
 
 ## Installation
 
