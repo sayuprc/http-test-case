@@ -12,8 +12,6 @@ class TestResponseTest extends TestCase
 {
     /**
      * Testing assertions
-     *
-     * @return void
      */
     public function testAssertions(): void
     {
