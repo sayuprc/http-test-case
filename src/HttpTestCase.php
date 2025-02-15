@@ -68,8 +68,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a GET request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function get(string $uri, array $options = []): TestResponse
     {
@@ -79,8 +79,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a HEAD request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function head(string $uri, array $options = []): TestResponse
     {
@@ -90,8 +90,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a POST request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function post(string $uri, array $options = []): TestResponse
     {
@@ -101,8 +101,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a PUT request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function put(string $uri, array $options = []): TestResponse
     {
@@ -112,8 +112,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a DELETE request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function delete(string $uri, array $options = []): TestResponse
     {
@@ -123,8 +123,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a OPTIONS request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function options(string $uri, array $options = []): TestResponse
     {
@@ -134,8 +134,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a PATCH request
      *
-     * @param string $uri
-     * @param array  $options
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function patch(string $uri, array $options = []): TestResponse
     {
@@ -145,9 +145,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a request
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param string           $method
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function sendRequest(string $method, string $uri, array $options = []): TestResponse
     {
@@ -159,9 +159,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create an instance that implements RequestInterface
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param string           $method
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     private function createRequest(string $method, string $uri, array $options = []): RequestInterface
     {
@@ -283,7 +283,7 @@ abstract class HttpTestCase extends TestCase
     /**
      * The response is about redirect
      *
-     * @param string $uri
+     * @param non-empty-string $uri
      */
     private function isRedirect(?ResponseInterface $response, string $uri): bool
     {

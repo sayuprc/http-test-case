@@ -42,7 +42,7 @@ class TestResponse
     /**
      * Assertion of contents of the specific response header
      *
-     * @param string[] $expected
+     * @param array<string> $expected
      */
     public function assertHeader(string $name, array $expected): static
     {
@@ -54,7 +54,7 @@ class TestResponse
     /**
      * Assertion of not same contents of the specific response header
      *
-     * @param string[] $expected
+     * @param array<string> $expected
      */
     public function assertNotHeader(string $name, array $expected): static
     {
@@ -254,7 +254,7 @@ class TestResponse
     /**
      * Retrieves a message header value by the given case-insensitive name.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getHeader(string $name): array
     {
