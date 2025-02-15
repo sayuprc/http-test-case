@@ -165,6 +165,8 @@ class TestResponse
 
     /**
      * Assertion of json string
+     *
+     * @param array<mixed>|string $expected
      */
     public function assertJson(array|string $expected): static
     {
@@ -179,6 +181,8 @@ class TestResponse
 
     /**
      * Assertion of not same json string
+     *
+     * @param array<mixed>|string $expected
      */
     public function assertNotJson(array|string $expected): static
     {
@@ -198,7 +202,7 @@ class TestResponse
     {
         $jsonArray = json_decode($this->getBody(), true);
 
-        if (! $jsonArray) {
+        if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
             $keys = explode('.', $key);
@@ -208,7 +212,9 @@ class TestResponse
             unset($keys[0]);
 
             foreach ($keys as $key) {
-                $actual = $actual[$key];
+                if (is_array($actual)) {
+                    $actual = $actual[$key];
+                }
             }
 
             Assert::assertSame($expected, $actual);
@@ -224,7 +230,7 @@ class TestResponse
     {
         $jsonArray = json_decode($this->getBody(), true);
 
-        if (! $jsonArray) {
+        if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
             $keys = explode('.', $key);
@@ -234,7 +240,9 @@ class TestResponse
             unset($keys[0]);
 
             foreach ($keys as $key) {
-                $actual = $actual[$key];
+                if (is_array($actual)) {
+                    $actual = $actual[$key];
+                }
             }
 
             Assert::assertNotSame($expected, $actual);
