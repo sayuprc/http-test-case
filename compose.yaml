@@ -1,0 +1,8 @@
+services:
+  php:
+    image: http-test-case:v4.x
+    container_name: http-test-case-v4.x
+    tty: true
+    volumes:
+      - .:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
