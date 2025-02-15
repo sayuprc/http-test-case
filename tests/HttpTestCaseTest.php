@@ -19,33 +19,21 @@ class HttpTestCaseTest extends HttpTestCase
      */
     private const BASE_URI = 'https://httpbin.org/';
 
-    /**
-     * @inheritDoc
-     */
     protected function getClient(): ClientInterface
     {
         return new Client();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRequestFactory(): RequestFactoryInterface
     {
         return new HttpFactory();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getUriFactory(): UriFactoryInterface
     {
         return new HttpFactory();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getStreamFactory(): StreamFactoryInterface
     {
         return new HttpFactory();
@@ -53,8 +41,6 @@ class HttpTestCaseTest extends HttpTestCase
 
     /**
      * Testing GET requests
-     *
-     * @return void
      */
     public function testGet(): void
     {
@@ -95,8 +81,6 @@ class HttpTestCaseTest extends HttpTestCase
 
     /**
      * Testing POST requests
-     *
-     * @return void
      */
     public function testPost(): void
     {
@@ -143,8 +127,6 @@ class HttpTestCaseTest extends HttpTestCase
 
     /**
      * Testing PUT requests
-     *
-     * @return void
      */
     public function testPut(): void
     {
@@ -191,8 +173,6 @@ class HttpTestCaseTest extends HttpTestCase
 
     /**
      * Testing DELETE requests
-     *
-     * @return void
      */
     public function testDelete(): void
     {

@@ -15,34 +15,16 @@ use Psr\Http\Message\UriFactoryInterface;
 
 abstract class HttpTestCase extends TestCase
 {
-    /**
-     * @var ClientInterface $httpClient
-     */
     private ClientInterface $httpClient;
 
-    /**
-     * @var RequestFactoryInterface $requestFactory
-     */
     private RequestFactoryInterface $requestFactory;
 
-    /**
-     * @var UriFactoryInterface $uriFactory
-     */
     private UriFactoryInterface $uriFactory;
 
-    /**
-     * @var StreamFactoryInterface $streamFactory
-     */
     private StreamFactoryInterface $streamFactory;
 
-    /**
-     * @var RequestInterface|null $latestRequest
-     */
     private ?RequestInterface $latestRequest = null;
 
-    /**
-     * @var ResponseInterface|null $latestResponse
-     */
     private ?ResponseInterface $latestResponse = null;
 
     /**
@@ -65,39 +47,29 @@ abstract class HttpTestCase extends TestCase
 
     /**
      * Obtain the ClientInterface implementation to be used in the test
-     *
-     * @return ClientInterface
      */
     abstract protected function getClient(): ClientInterface;
 
     /**
      * Obtain the RequestFactoryInterface implementation to be used in the test
-     *
-     * @return RequestFactoryInterface
      */
     abstract protected function getRequestFactory(): RequestFactoryInterface;
 
     /**
      * Obtain the UriFactoryInterface implementation to be used in the test
-     *
-     * @return UriFactoryInterface
      */
     abstract protected function getUriFactory(): UriFactoryInterface;
 
     /**
      * Obtain the StreamFactoryInterface implementation to be used in the test
-     *
-     * @return StreamFactoryInterface
      */
     abstract protected function getStreamFactory(): StreamFactoryInterface;
 
     /**
      * Send a GET request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function get(string $uri, array $options = []): TestResponse
     {
@@ -107,10 +79,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a HEAD request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function head(string $uri, array $options = []): TestResponse
     {
@@ -120,10 +90,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a POST request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function post(string $uri, array $options = []): TestResponse
     {
@@ -133,10 +101,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a PUT request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function put(string $uri, array $options = []): TestResponse
     {
@@ -146,10 +112,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a DELETE request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function delete(string $uri, array $options = []): TestResponse
     {
@@ -159,10 +123,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a OPTIONS request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function options(string $uri, array $options = []): TestResponse
     {
@@ -172,10 +134,8 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a PATCH request
      *
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function patch(string $uri, array $options = []): TestResponse
     {
@@ -185,11 +145,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a request
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return TestResponse
+     * @param string           $method
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     public function sendRequest(string $method, string $uri, array $options = []): TestResponse
     {
@@ -201,11 +159,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create an instance that implements RequestInterface
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
-     *
-     * @return RequestInterface
+     * @param string           $method
+     * @param non-empty-string $uri
+     * @param array            $options
      */
     private function createRequest(string $method, string $uri, array $options = []): RequestInterface
     {
@@ -248,10 +204,7 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create application/x-www-form-urlencoded request
      *
-     * @param RequestInterface $request
-     * @param array            $data
-     *
-     * @return RequestInterface
+     * @param array $data
      */
     private function createFormRequest(RequestInterface $request, array $data): RequestInterface
     {
@@ -263,10 +216,7 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create application/json request
      *
-     * @param RequestInterface $request
-     * @param array            $data
-     *
-     * @return RequestInterface
+     * @param array $data
      */
     private function createJsonRequest(RequestInterface $request, array $data): RequestInterface
     {
@@ -278,12 +228,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create multipart/form-data request
      *
-     * @param RequestInterface $request
-     * @param array            $data
+     * @param array $data
      *
      * @throws InvalidArgumentException
-     *
-     * @return RequestInterface
      */
     private function createMultipartRequest(RequestInterface $request, array $data): RequestInterface
     {
@@ -336,10 +283,7 @@ abstract class HttpTestCase extends TestCase
     /**
      * The response is about redirect
      *
-     * @param ResponseInterface|null $response
-     * @param string                 $uri
-     *
-     * @return bool
+     * @param non-empty-string $uri
      */
     private function isRedirect(?ResponseInterface $response, string $uri): bool
     {
