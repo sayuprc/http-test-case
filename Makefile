@@ -31,6 +31,22 @@ php: ## Enter php container
 composer-install: ## Install composer packages
 	docker compose run --rm php composer install
 
+.PHONY: phpunit
+phpunit: ## Run PHPUnit
+	docker compose run --rm php composer phpunit
+
+.PHONY: phpstan
+phpstan: ## Run PHPStan
+	docker compose run --rm php composer phpstan
+
+.PHONY: ecs
+ecs: ## Run ecs
+	docker compose exec php composer ecs
+
+.PHONY: ecs-fix
+ecs-fix: ## Run ecs fix
+	docker compose exec php composer ecs-fix
+
 .PHONY: help
 help: ## Display a list of targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
