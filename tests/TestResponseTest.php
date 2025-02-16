@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HttpTestCase\Tests;
+namespace Tests;
 
 use GuzzleHttp\Psr7\Response;
 use HttpTestCase\TestResponse;
