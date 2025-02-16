@@ -206,12 +206,7 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $elements = preg_split('/(?<!\\\\)\./', $key);
-            if ($elements === false) {
-                throw new LogicException("Failed to split string: {$key}");
-            }
-
-            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
+            $keys = $this->splitKey($key);
 
             $actual = $jsonArray[$keys[0]];
 
@@ -239,12 +234,7 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $elements = preg_split('/(?<!\\\\)\./', $key);
-            if ($elements === false) {
-                throw new LogicException("Failed to split string: {$key}");
-            }
-
-            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
+            $keys = $this->splitKey($key);
 
             $actual = $jsonArray[$keys[0]];
 
@@ -260,6 +250,21 @@ class TestResponse
         }
 
         return $this;
+    }
+
+    /**
+     * Dot-delimited array of strings
+     *
+     * @return array<string>
+     */
+    private function splitKey(string $key): array
+    {
+        $elements = preg_split('/(?<!\\\\)\./', $key);
+        if ($elements === false) {
+            throw new LogicException("Failed to split string: {$key}");
+        }
+
+        return array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
     }
 
     /**
