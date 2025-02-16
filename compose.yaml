@@ -1,7 +1,7 @@
 services:
   php:
-    image: http-test-case:v4.x
-    container_name: http-test-case-v4.x
+    image: http-test-case:v5.x
+    container_name: http-test-case-v5.x
     tty: true
     volumes:
       - .:/var/www/html

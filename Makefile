@@ -9,7 +9,7 @@ GROUPNAME := $(shell id -g -n)
 
 .PHONY: build
 build: ## Build docker image for develop environment
-	docker build -t http-test-case:v4.x . \
+	docker build -t http-test-case:v5.x . \
 		--build-arg UID=${UID} \
 		--build-arg GID=${GID} \
 		--build-arg USERNAME=${USERNAME} \
