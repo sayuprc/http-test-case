@@ -6,7 +6,7 @@ namespace Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
-use HttpTestCase\HttpTestCase;
+use HttpTest\HttpTestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
