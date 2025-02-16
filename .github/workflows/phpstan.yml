@@ -21,7 +21,7 @@ jobs:
 
       - name: Composer cache
         id: composer_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
