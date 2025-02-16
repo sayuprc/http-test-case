@@ -29,7 +29,7 @@ class TestResponseTest extends TestCase
                     ],
                     'Location' => 'https://example.com',
                 ],
-                '{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}}'
+                '{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}, "include.dot": "dot.value"}'
             )
         );
 
@@ -44,15 +44,16 @@ class TestResponseTest extends TestCase
             ->assertNotLocation('https://localhost')
             ->assertContentType('application/json')
             ->assertNotContentType('text/plain')
-            ->assertBody('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}}')
+            ->assertBody('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}, "include.dot": "dot.value"}')
             ->assertNotBody('body')
             ->assertBodyContains('day')
             ->assertNotBodyContains('not body')
-            ->assertJson('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}}')
-            ->assertJson(['name' => 'hoge', 'birthday' => ['year' => 2023, 'month' => 3, 'day' => 30]])
+            ->assertJson('{"name": "hoge", "birthday": {"year": 2023, "month": 3, "day": 30}, "include.dot": "dot.value"}')
+            ->assertJson(['name' => 'hoge', 'birthday' => ['year' => 2023, 'month' => 3, 'day' => 30], 'include.dot' => 'dot.value'])
             ->assertNotJson(['name' => 'hoge', 'birthday' => ['year' => 2023]])
             ->assertJsonKey('birthday.year', 2023)
             ->assertJsonKey('birthday', ['year' => 2023, 'month' => 3, 'day' => 30])
-            ->assertNotJsonKey('birthday', ['month' => 3, 'day' => 30]);
+            ->assertNotJsonKey('birthday', ['month' => 3, 'day' => 30])
+            ->assertJsonKey('include\.dot', 'dot.value');
     }
 }
