@@ -25,7 +25,7 @@ class HttpTestCaseTest extends HttpTestCase
 
         exec('php -S localhost:8080 -t bin bin/router.php > /dev/null 2>&1 &');
 
-        usleep(10000);
+        usleep(100000);
     }
 
     public static function tearDownAfterClass(): void
