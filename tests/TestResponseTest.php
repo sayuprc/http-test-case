@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HttpTestCase\Tests;
 
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
 use HttpTestCase\TestResponse;
+use PHPUnit\Framework\TestCase;
 
 class TestResponseTest extends TestCase
 {

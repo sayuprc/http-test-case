@@ -1,4 +1,4 @@
-name: PHP-CS-Fixer
+name: Easy-Coding-Standard
 
 on: pull_request
 
@@ -41,4 +41,4 @@ jobs:
           composer install -n --prefer-dist
 
       - name: Run php-cs-fixer
-        run: vendor/bin/php-cs-fixer fix --path-mode=intersection --dry-run --diff .
+        run: vendor/bin/ecs check

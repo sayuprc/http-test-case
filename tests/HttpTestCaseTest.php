@@ -6,11 +6,11 @@ namespace HttpTestCase\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
+use HttpTestCase\HttpTestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
-use HttpTestCase\HttpTestCase;
 
 class HttpTestCaseTest extends HttpTestCase
 {
