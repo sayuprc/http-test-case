@@ -205,7 +205,7 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = explode('.', $key);
+            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), preg_split('/(?<!\\\\)\./', $key));
 
             $actual = $jsonArray[$keys[0]];
 
@@ -233,7 +233,7 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = explode('.', $key);
+            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), preg_split('/(?<!\\\\)\./', $key));
 
             $actual = $jsonArray[$keys[0]];
 

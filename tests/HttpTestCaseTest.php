@@ -17,7 +17,23 @@ class HttpTestCaseTest extends HttpTestCase
     /**
      * URI for testing
      */
-    private const BASE_URI = 'https://httpbin.org/';
+    private const BASE_URI = 'http://localhost:8080/';
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        exec('php -S localhost:8080 -t bin bin/router.php > /dev/null 2>&1 &');
+
+        usleep(10000);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        exec('pkill -f "php -S localhost:8080"');
+    }
 
     protected function getClient(): ClientInterface
     {
@@ -56,12 +72,12 @@ class HttpTestCaseTest extends HttpTestCase
             ]
         )->assertStatusCode(200)
             ->assertJsonKey('args.key', 'value')
-            ->assertJsonKey('args.nest[key 1]', 'value 1');
+            ->assertJsonKey('args.nest.key 1', 'value 1');
 
         $this->get(self::BASE_URI . 'status/404')
             ->assertStatusCode(404);
 
-        $this->get(self::BASE_URI . 'absolute-redirect/1')
+        $this->get(self::BASE_URI . 'absolute-redirect')
             ->assertStatusCode(302);
 
         $response = $this->get(
@@ -69,7 +85,6 @@ class HttpTestCaseTest extends HttpTestCase
             [
                 'query' => [
                     'url' => self::BASE_URI . 'get',
-                    'status_code' => 200,
                 ],
             ]
         )->assertStatusCode(302)
@@ -96,7 +111,7 @@ class HttpTestCaseTest extends HttpTestCase
             ]
         )->assertStatusCode(200)
             ->assertJsonKey('form.key', 'value')
-            ->assertJsonKey('form.nest[key 1]', 'value 1');
+            ->assertJsonKey('form.nest.key 1', 'value 1');
 
         $this->post(self::BASE_URI . 'status/404')
             ->assertStatusCode(404);
@@ -122,7 +137,7 @@ class HttpTestCaseTest extends HttpTestCase
                 ],
             ]
         )->assertJsonKey('form.hoge', 'hoge value')
-            ->assertJsonKey('files.file B', 'file contents');
+            ->assertJsonKey('files.fileB\.txt', 'file contents');
     }
 
     /**
@@ -142,7 +157,7 @@ class HttpTestCaseTest extends HttpTestCase
             ]
         )->assertStatusCode(200)
             ->assertJsonKey('form.key', 'value')
-            ->assertJsonKey('form.nest[key 1]', 'value 1');
+            ->assertJsonKey('form.nest.key 1', 'value 1');
 
         $this->put(self::BASE_URI . 'status/404')
             ->assertStatusCode(404);
@@ -168,7 +183,7 @@ class HttpTestCaseTest extends HttpTestCase
                 ],
             ]
         )->assertJsonKey('form.hoge', 'hoge value')
-            ->assertJsonKey('files.file B', 'file contents');
+            ->assertJsonKey('files.fileB\.txt', 'file contents');
     }
 
     /**
@@ -188,7 +203,7 @@ class HttpTestCaseTest extends HttpTestCase
             ]
         )->assertStatusCode(200)
             ->assertJsonKey('form.key', 'value')
-            ->assertJsonKey('form.nest[key 1]', 'value 1');
+            ->assertJsonKey('form.nest.key 1', 'value 1');
 
         $this->delete(self::BASE_URI . 'status/404')
             ->assertStatusCode(404);
@@ -214,6 +229,6 @@ class HttpTestCaseTest extends HttpTestCase
                 ],
             ]
         )->assertJsonKey('form.hoge', 'hoge value')
-            ->assertJsonKey('files.file B', 'file contents');
+            ->assertJsonKey('files.fileB\.txt', 'file contents');
     }
 }
