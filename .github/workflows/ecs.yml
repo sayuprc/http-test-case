@@ -41,4 +41,4 @@ jobs:
           composer install -n --prefer-dist
 
       - name: Run php-cs-fixer
-        run: vendor/bin/ecs check
+        run: composer ecs

@@ -35,6 +35,8 @@
     },
     "scripts": {
         "phpunit": "phpunit",
-        "phpstan": "phpstan analyze --memory-limit=2G --no-progress"
+        "phpstan": "phpstan analyze --memory-limit=2G --no-progress",
+        "ecs": "vendor/bin/ecs check --ansi --no-progress-bar",
+        "ecs-fix": "vendor/bin/ecs check --fix --ansi --no-progress-bar"
     }
 }
