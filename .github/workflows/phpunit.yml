@@ -41,4 +41,4 @@ jobs:
           composer install -n --prefer-dist
 
       - name: Run phpunit
-        run: vendor/bin/phpunit tests/
+        run: composer phpunit

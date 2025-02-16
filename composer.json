@@ -32,5 +32,8 @@
             "php": "8.2"
         },
         "sort-packages": true
+    },
+    "scripts": {
+        "phpunit": "phpunit"
     }
 }
