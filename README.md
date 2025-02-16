@@ -8,8 +8,8 @@ A library for HTTP testing.
 
 |name|version|
 |---|---|
-|PHP|^8.1|
-|PHPUnit|^10.0|
+|PHP|^8.2|
+|PHPUnit|^11.0|
 
 ## Installation
 
@@ -31,11 +31,11 @@ Extend the `HttpTestCase` class and implement the following methods:
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
+use HttpTest\HttpTestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
-use Sayuprc\HttpTestCase\HttpTestCase;
 
 class SampleTest extends HttpTestCase
 {
@@ -66,7 +66,7 @@ class SampleTest extends HttpTestCase
 ```php
 <?php
 
-use Sayuprc\HttpTestCase\HttpTestCase;
+use HttpTest\HttpTestCase;
 
 class SampleTest extends HttpTestCase
 {
@@ -84,7 +84,7 @@ class SampleTest extends HttpTestCase
 ```php
 <?php
 
-use Sayuprc\HttpTestCase\HttpTestCase;
+use HttpTest\HttpTestCase;
 
 class SampleTest extends HttpTestCase
 {

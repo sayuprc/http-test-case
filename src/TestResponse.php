@@ -2,21 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sayuprc\HttpTestCase;
+namespace HttpTest;
 
+use LogicException;
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;
 
 class TestResponse
 {
-    /**
-     * @var ResponseInterface $response
-     */
     private ResponseInterface $response;
 
     /**
-     * @param ResponseInterface $response
-     *
      * @return void
      */
     public function __construct(ResponseInterface $response)
@@ -26,10 +22,6 @@ class TestResponse
 
     /**
      * Assertion of status code
-     *
-     * @param int $expected
-     *
-     * @return static
      */
     public function assertStatusCode(int $expected): static
     {
@@ -40,10 +32,6 @@ class TestResponse
 
     /**
      * Assertion of not same status code
-     *
-     * @param int $expected
-     *
-     * @return static
      */
     public function assertNotStatusCode(int $expected): static
     {
@@ -55,10 +43,7 @@ class TestResponse
     /**
      * Assertion of contents of the specific response header
      *
-     * @param string   $name
-     * @param string[] $expected
-     *
-     * @return static
+     * @param array<string> $expected
      */
     public function assertHeader(string $name, array $expected): static
     {
@@ -70,10 +55,7 @@ class TestResponse
     /**
      * Assertion of not same contents of the specific response header
      *
-     * @param string   $name
-     * @param string[] $expected
-     *
-     * @return static
+     * @param array<string> $expected
      */
     public function assertNotHeader(string $name, array $expected): static
     {
@@ -84,11 +66,6 @@ class TestResponse
 
     /**
      * Assertion of contents of the comma-separated string of the values for a single header
-     *
-     * @param string $name
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertHeaderLine(string $name, string $expected): static
     {
@@ -99,11 +76,6 @@ class TestResponse
 
     /**
      * Assertion of not same contents of the comma-separated string of the values for a single header
-     *
-     * @param string $name
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertNotHeaderLine(string $name, string $expected): static
     {
@@ -114,10 +86,6 @@ class TestResponse
 
     /**
      * Assertion of contents of the location
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertLocation(string $expected): static
     {
@@ -128,10 +96,6 @@ class TestResponse
 
     /**
      * Assertion of not same contents of the location
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertNotLocation(string $expected): static
     {
@@ -142,10 +106,6 @@ class TestResponse
 
     /**
      * Assertion of contents of the content type
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertContentType(string $expected): static
     {
@@ -156,10 +116,6 @@ class TestResponse
 
     /**
      * Assertion of not same contents of the content type
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertNotContentType(string $expected): static
     {
@@ -170,10 +126,6 @@ class TestResponse
 
     /**
      * Assertion of contents of the response body
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertBody(string $expected): static
     {
@@ -184,10 +136,6 @@ class TestResponse
 
     /**
      * Assertion of not same contents of the response body
-     *
-     * @param string $expected
-     *
-     * @return static
      */
     public function assertNotBody(string $expected): static
     {
@@ -198,10 +146,6 @@ class TestResponse
 
     /**
      * Assertion of body contains a needle
-     *
-     * @param string $needle
-     *
-     * @return static
      */
     public function assertBodyContains(string $needle): static
     {
@@ -212,10 +156,6 @@ class TestResponse
 
     /**
      * Assertion of body not contains a needle
-     *
-     * @param string $needle
-     *
-     * @return static
      */
     public function assertNotBodyContains(string $needle): static
     {
@@ -227,9 +167,7 @@ class TestResponse
     /**
      * Assertion of json string
      *
-     * @param string|array $expected
-     *
-     * @return static
+     * @param array<mixed>|string $expected
      */
     public function assertJson(array|string $expected): static
     {
@@ -245,9 +183,7 @@ class TestResponse
     /**
      * Assertion of not same json string
      *
-     * @param string|array $expected
-     *
-     * @return static
+     * @param array<mixed>|string $expected
      */
     public function assertNotJson(array|string $expected): static
     {
@@ -262,27 +198,24 @@ class TestResponse
 
     /**
      * Assertion of contents of a json string
-     *
-     * @param string $key
-     * @param mixed  $expected
-     *
-     * @return static
      */
     public function assertJsonKey(string $key, mixed $expected): static
     {
         $jsonArray = json_decode($this->getBody(), true);
 
-        if (! $jsonArray) {
+        if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = explode('.', $key);
+            $keys = $this->splitKey($key);
 
             $actual = $jsonArray[$keys[0]];
 
             unset($keys[0]);
 
             foreach ($keys as $key) {
-                $actual = $actual[$key];
+                if (is_array($actual)) {
+                    $actual = $actual[$key];
+                }
             }
 
             Assert::assertSame($expected, $actual);
@@ -293,27 +226,24 @@ class TestResponse
 
     /**
      * Assertion of not same contents of a json string
-     *
-     * @param string $key
-     * @param mixed  $expected
-     *
-     * @return static
      */
     public function assertNotJsonKey(string $key, mixed $expected): static
     {
         $jsonArray = json_decode($this->getBody(), true);
 
-        if (! $jsonArray) {
+        if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = explode('.', $key);
+            $keys = $this->splitKey($key);
 
             $actual = $jsonArray[$keys[0]];
 
             unset($keys[0]);
 
             foreach ($keys as $key) {
-                $actual = $actual[$key];
+                if (is_array($actual)) {
+                    $actual = $actual[$key];
+                }
             }
 
             Assert::assertNotSame($expected, $actual);
@@ -323,11 +253,22 @@ class TestResponse
     }
 
     /**
+     * Dot-delimited array of strings
+     *
+     * @return array<string>
+     */
+    private function splitKey(string $key): array
+    {
+        $elements = preg_split('/(?<!\\\\)\./', $key);
+        if ($elements === false) {
+            throw new LogicException("Failed to split string: {$key}");
+        }
+
+        return array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
+    }
+
+    /**
      * Retrieves a comma-separated string of the values for a single header
-     *
-     * @param string $name
-     *
-     * @return string
      */
     public function getHeaderLine(string $name): string
     {
@@ -337,9 +278,7 @@ class TestResponse
     /**
      * Retrieves a message header value by the given case-insensitive name.
      *
-     * @param string $name
-     *
-     * @return string[]
+     * @return array<string>
      */
     public function getHeader(string $name): array
     {
@@ -348,8 +287,6 @@ class TestResponse
 
     /**
      * Retrieves a response body
-     *
-     * @return string
      */
     public function getBody(): string
     {
@@ -358,8 +295,6 @@ class TestResponse
 
     /**
      * Dump the contents of the response header
-     *
-     * @return void
      */
     public function dumpHeaders(): void
     {
@@ -368,8 +303,6 @@ class TestResponse
 
     /**
      * Dump the contents of the specific response header
-     *
-     * @return void
      */
     public function dumpHeader(string $name): void
     {
@@ -378,8 +311,6 @@ class TestResponse
 
     /**
      * Dump the contents of the response body
-     *
-     * @return void
      */
     public function dumpBody(): void
     {

@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.1", "8.2", "8.3"]
+        php-versions: ["8.2"]
 
     steps:
       - name: Checkout the code
@@ -21,7 +21,7 @@ jobs:
 
       - name: Composer cache
         id: composer_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -40,5 +40,5 @@ jobs:
           echo 'Install packages'
           composer install -n --prefer-dist
 
-      - name: Run phpstan
-        run: vendor/bin/phpstan analyse --memory-limit=-1
+      - name: Run PHPStan
+        run: composer phpstan

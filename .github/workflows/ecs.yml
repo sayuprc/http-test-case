@@ -1,17 +1,17 @@
-name: PHP-CS-Fixer
+name: Easy-Coding-Standard
 
 on: pull_request
 
 jobs:
   lint:
-    name: PHP-CS-Fixer (PHP ${{ matrix.php-versions }})
+    name: Easy-Coding-Standard (PHP ${{ matrix.php-versions }})
 
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.1", "8.2", "8.3"]
+        php-versions: ["8.2"]
 
     steps:
       - name: Checkout the code
@@ -21,7 +21,7 @@ jobs:
 
       - name: Composer cache
         id: composer_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -40,5 +40,5 @@ jobs:
           echo 'Install packages'
           composer install -n --prefer-dist
 
-      - name: Run php-cs-fixer
-        run: vendor/bin/php-cs-fixer fix --path-mode=intersection --dry-run --diff .
+      - name: Run ecs
+        run: composer ecs
