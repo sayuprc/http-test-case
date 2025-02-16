@@ -40,5 +40,5 @@ jobs:
           echo 'Install packages'
           composer install -n --prefer-dist
 
-      - name: Run phpstan
-        run: vendor/bin/phpstan analyse --memory-limit=-1
+      - name: Run PHPStan
+        run: composer phpstan
