@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HttpTestCase;
+namespace HttpTest;
 
 use InvalidArgumentException;
 use JsonException;
