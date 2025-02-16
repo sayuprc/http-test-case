@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HttpTestCase;
 
+use LogicException;
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;
 
@@ -205,7 +206,12 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), preg_split('/(?<!\\\\)\./', $key));
+            $elements = preg_split('/(?<!\\\\)\./', $key);
+            if ($elements === false) {
+                throw new LogicException("Failed to split string: {$key}");
+            }
+
+            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
 
             $actual = $jsonArray[$keys[0]];
 
@@ -233,7 +239,12 @@ class TestResponse
         if (! is_array($jsonArray)) {
             Assert::fail('Failed to parse json string');
         } else {
-            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), preg_split('/(?<!\\\\)\./', $key));
+            $elements = preg_split('/(?<!\\\\)\./', $key);
+            if ($elements === false) {
+                throw new LogicException("Failed to split string: {$key}");
+            }
+
+            $keys = array_map(fn ($key) => str_replace('\.', '.', $key), $elements);
 
             $actual = $jsonArray[$keys[0]];
 
