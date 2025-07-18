@@ -12,9 +12,6 @@ class TestResponse
 {
     private ResponseInterface $response;
 
-    /**
-     * @return void
-     */
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
