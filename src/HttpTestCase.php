@@ -16,6 +16,17 @@ use Psr\Http\Message\UriFactoryInterface;
 use Random\RandomException;
 use RuntimeException;
 
+/**
+ * @phpstan-type http_methods 'GET'|'HEAD'|'POST'|'PUT'|'DELETE'|'OPTIONS'|'PATCH'
+ * @phpstan-type http_options array{
+ *     query?: array<mixed>|object,
+ *     headers?: array<string, string>,
+ *     data?: array<mixed>,
+ *     json?: array<mixed>,
+ *     multipart?: array<multipart_body>
+ * }
+ * @phpstan-type multipart_body array{name?: string, contents?: string, filename?: string, content-type?: string}
+ */
 abstract class HttpTestCase extends TestCase
 {
     private ClientInterface $httpClient;
@@ -67,13 +78,7 @@ abstract class HttpTestCase extends TestCase
      * Send a GET request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function get(string $uri, array $options = []): TestResponse
     {
@@ -84,13 +89,7 @@ abstract class HttpTestCase extends TestCase
      * Send a HEAD request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function head(string $uri, array $options = []): TestResponse
     {
@@ -101,13 +100,7 @@ abstract class HttpTestCase extends TestCase
      * Send a POST request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function post(string $uri, array $options = []): TestResponse
     {
@@ -118,13 +111,7 @@ abstract class HttpTestCase extends TestCase
      * Send a PUT request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function put(string $uri, array $options = []): TestResponse
     {
@@ -135,13 +122,7 @@ abstract class HttpTestCase extends TestCase
      * Send a DELETE request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function delete(string $uri, array $options = []): TestResponse
     {
@@ -152,13 +133,7 @@ abstract class HttpTestCase extends TestCase
      * Send a OPTIONS request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function options(string $uri, array $options = []): TestResponse
     {
@@ -169,13 +144,7 @@ abstract class HttpTestCase extends TestCase
      * Send a PATCH request
      *
      * @param non-empty-string $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_options     $options
      */
     public function patch(string $uri, array $options = []): TestResponse
     {
@@ -185,15 +154,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Send a request
      *
-     * @param 'GET'|'HEAD'|'POST'|'PUT'|'DELETE'|'OPTIONS'|'PATCH' $method
-     * @param non-empty-string                                     $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_methods     $method
+     * @param non-empty-string $uri
+     * @param http_options     $options
      */
     public function sendRequest(string $method, string $uri, array $options = []): TestResponse
     {
@@ -205,15 +168,9 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create an instance that implements RequestInterface
      *
-     * @param 'GET'|'HEAD'|'POST'|'PUT'|'DELETE'|'OPTIONS'|'PATCH' $method
-     * @param non-empty-string                                     $uri
-     * @param array{
-     *     query?: array<mixed>|object,
-     *     headers?: array<string, string>,
-     *     data?: array<mixed>,
-     *     json?: array<mixed>,
-     *     multipart?: array<array{name?: string, contents?: string, filename?: string, content-type?: string}>
-     * } $options
+     * @param http_methods     $method
+     * @param non-empty-string $uri
+     * @param http_options     $options
      */
     private function createRequest(string $method, string $uri, array $options = []): RequestInterface
     {
@@ -287,14 +244,11 @@ abstract class HttpTestCase extends TestCase
     /**
      * Create multipart/form-data request
      *
-     * @param array<array{
-     *     name?: string,
-     *     contents?: string,
-     *     filename?: string,
-     *     content-type?: string
-     * }> $data
+     * @param array<multipart_body> $data
      *
-     * @throws InvalidArgumentException|RuntimeException|RandomException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws RandomException
      */
     private function createMultipartRequest(RequestInterface $request, array $data): RequestInterface
     {
